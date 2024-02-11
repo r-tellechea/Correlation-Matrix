@@ -5,7 +5,9 @@ import plotly.express as px
 
 st.title('Correlation Matrix')
 
-df = (
+@st.cache_data
+def get_default_df() -> pd.DataFrame:
+	return (
 	pd.DataFrame({'A' : np.linspace(0,1,100)})
 	.assign(B = lambda df : df.A + 1)
 	.assign(C = lambda df : df.A * 2)
@@ -14,6 +16,8 @@ df = (
 	.assign(F = lambda df : np.cumsum(df.A))
 	.assign(G = np.random.rand(100))
 )
+
+df = get_default_df()
 
 st.dataframe(df, use_container_width=True)
 
